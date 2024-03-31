@@ -30,7 +30,7 @@ test:
 	go test -v
 
 image:
-	docker build .
+	docker build -t kbot .
 
 clean:
 	docker rm $(CONTAINER_TAG)
