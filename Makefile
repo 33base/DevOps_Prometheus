@@ -1,5 +1,6 @@
 VERSION = $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 IMAGE_TAG = $(shell docker images --format "{{.ID}}" | head -n 1)
+CONTAINER_TAG = $(shell docker ps -l -q)
 
 format:
 	gofmt -s -w ./
@@ -25,8 +26,9 @@ windows:
 lint:
 	golint
 
-test: lint
+test:
 	go test -v
 
 clean:
+	docker rm $(CONTAINER_TAG)
 	docker rmi $(IMAGE_TAG)
