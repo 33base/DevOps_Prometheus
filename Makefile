@@ -29,8 +29,8 @@ lint:
 test:
 	go test -v
 
-#image:
-#	docker build -t kbot .
+image:
+	docker build -t kbot .
 
 clean:
 	docker rm $(CONTAINER_TAG)
