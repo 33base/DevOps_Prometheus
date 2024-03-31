@@ -30,7 +30,7 @@ test:
 	go test -v
 
 image:
-	docker build -t $(VERSION) .
+	docker build .
 
 clean:
 	docker rm $(CONTAINER_TAG)
