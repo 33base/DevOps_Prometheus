@@ -29,6 +29,9 @@ lint:
 test:
 	go test -v
 
+image:
+	docker build -t $(VERSION) .
+
 clean:
 	docker rm $(CONTAINER_TAG)
 	docker rmi $(IMAGE_TAG)
