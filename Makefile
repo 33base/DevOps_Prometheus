@@ -1,7 +1,7 @@
 VERSION = $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 IMAGE_TAG = $(shell docker images --format "{{.ID}}" | head -n 1)
 CONTAINER_TAG = $(shell docker ps -l -q)
-APP = $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:lower:]')
+APP = $(shell basename $(shell git remote get-url origin))
 TARGETOS = linux
 REGISTRY = 33base
 TARGETARC = arm64
