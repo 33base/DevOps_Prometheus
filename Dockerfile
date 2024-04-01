@@ -5,6 +5,7 @@ WORKDIR /go/src/app
 COPY . . 
 
 RUN make build
+
 RUN make test
 
 

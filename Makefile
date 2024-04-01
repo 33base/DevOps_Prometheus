@@ -1,4 +1,4 @@
-VERSION = v1.0.1
+VERSION = $(shell git describe --tags --abbrev=0)-$(shell git rev-parse --short HEAD)
 IMAGE_TAG = $(shell docker images --format "{{.ID}}" | head -n 1)
 CONTAINER_TAG = $(shell docker ps -l -q)
 APP = $(shell basename $(shell git remote get-url origin) | tr '[:upper:]' '[:lower:]')
@@ -15,16 +15,16 @@ goget:
 build: format goget
 	CGO_ENABLED=0 go build -v -o kbot -ldflags "-X="github.com/33base/kbot/cmd.appVersion=$(VERSION)
 
-linux:
+linux: format goget
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -v -o kbot -ldflags "-X="github.com/33base/kbot/cmd.appVersion=$(VERSION)
 
-arm:
+arm: format goget
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -v -o kbot -ldflags "-X="github.com/33base/kbot/cmd.appVersion=$(VERSION)
 
-macos:
+macos: format goget
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -v -o kbot -ldflags "-X="github.com/33base/kbot/cmd.appVersion=$(VERSION)
 
-windows:
+windows: format goget
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -v -o kbot -ldflags "-X="github.com/33base/kbot/cmd.appVersion=$(VERSION)
 
 lint:
