@@ -40,6 +40,6 @@ push:
 	docker push $(REGISTRY)/$(APP):$(VERSION)-$(TARGETARC)
 
 clean:
-	docker rm $(CONTAINER_TAG)
-	docker rmi $(IMAGE_TAG)
+#	docker rm $(CONTAINER_TAG)
+	docker rmi $(REGISTRY)/$(APP):$(VERSION)-$(TARGETARC)
 	
