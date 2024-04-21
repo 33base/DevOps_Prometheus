@@ -1,17 +1,21 @@
-FROM golang as builder 
+# Використовуємо офіційний образ Golang
+FROM golang AS builder
 
-WORKDIR /src
+# Встановлюємо робочу директорію в контейнері
+WORKDIR /app
 
-COPY src .
+# Копіюємо залежності та виконуємо збірку проекту
+COPY . .
+RUN CGO_ENABLED=0 go build -o server .
 
-RUN CGO_ENABLED=0 go build -o app
+# Використовуємо легкий образ для запуску нашого сервера
+FROM alpine:latest
 
-FROM scratch 
+# Копіюємо виконуваний файл з попереднього етапу
+COPY --from=builder /app/server /server
 
-ADD ./html /html
-
-COPY --from=builder /src/app .
-
-ENTRYPOINT [ "/app" ]
-
+# Вказуємо, на якому порту буде працювати сервер
 EXPOSE 8080
+
+# Запускаємо наш сервер при старті контейнера
+CMD ["/server"]
